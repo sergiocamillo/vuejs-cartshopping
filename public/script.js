@@ -21,9 +21,19 @@ new Vue(
                 title: "Item 3",
                 price:12.00  }
          ],
-         cart: []
+         cart: [],
+         searchText: ''
      },
      methods: {
+        search: function()
+        {
+          this.$http.get('/search/'.concat(this.searchText))
+          .then(function(res) {
+                console.log(res);
+              })
+            ;
+        },
+        
         addItem: function(index) {
             let item = this.items[index];
 
@@ -70,7 +80,7 @@ new Vue(
         {
             item.qty--;
 
-            if(item.qty <= 0) // Remove item from the cart
+            if(item.qty < 1) // Remove item from the cart
                 this.cart.splice(index,1)
             
             this.total -= item.price;
