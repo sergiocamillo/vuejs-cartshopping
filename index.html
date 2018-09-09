@@ -16,23 +16,43 @@
 <body>
 <div id="app">
     <div class="header">
-        <h1>Vue.js Poster Store</h1>
+        <h1>Vue.js Cart Shopping example</h1>
     </div>
     <div class="main">
         <div class="products">
-            <p>Products go here.</p>
+          <div class="product" v-for="(item, index) in items">
+              <h4 class="product-title">{{item.title}}</h4>
+              <div class="product-price">{{item.price}}</div>
+              <button class="add-to-cart" v-on:click="addItem(index)">Add to cart</button> 
+              <!--this another way to sender click to vue-->
+              <!-- <button class="add-to-cart" @click="addItem(index)">Add to cart</button>  -->
+          </div>
         </div>
         <div class="cart">
-            <h2>Shopping Cart</h2>
-            <div>
-                No items in the cart.
+            <h2>Shopping Cart ( {{cart.length}} )</h2>
+            <div >
+                <ul>
+                    <li class="cart-item" v-for="(item, index) in cart">
+                        <div class="item-title">{{item.title}}</div>
+                        <span class="item-qty"> {{item.price | currency }} x {{item.qty}}</span>
+                        <button class="btn" @click="plus(item)" >+</button>
+                        <button class="btn" @click="minus(item, index)">-</button>
+                        <!-- <div class="item-price"></div> -->
+                    </li>
+                </ul>
+               <div v-if="cart.length">Total: {{total | currency }}</div>
+               <div v-else class="empty-cart">
+                    No item in the cart.
+                </div>
             </div>
+           
         </div>
     </div>
 </div>
 
 <!-- Scripts -->
 <script src="/reload/reload.js"></script>
+<script src="node_modules/vue/dist/vue.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>
